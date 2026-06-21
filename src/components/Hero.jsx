@@ -303,7 +303,7 @@ export function Hero() {
           <TypeWriter
             words={[
               "Java Full-Stack Developer",
-              "Microservices Architect using DDD",
+              "Domain Driven Design (DDD) Architect",
             ]}
           />
         </motion.h2>
@@ -488,7 +488,7 @@ export function Hero() {
           <TypeWriter
             words={[
               "Java Full-Stack Developer",
-              "Domain Driven Design(DDD) Architect",
+              "Domain Driven Design (DDD) Architect",
             ]}
           />
         </motion.h2>
