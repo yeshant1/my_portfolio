@@ -84,15 +84,28 @@ export function SkillsSection() {
               key={skill.name}
               variants={itemVariants}
               style={{
-                padding: "28px",
+                padding: "24px",
                 background: theme.cardBg,
                 border: `1px solid ${theme.borderColor}`,
                 borderRadius: "16px",
                 backdropFilter: "blur(10px)",
                 position: "relative",
                 overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                cursor: "pointer",
+                height: "100%",
+                minHeight: "140px",
               }}
-              whileHover={{ scale: 1.05, borderColor: theme.primary }}
+              whileHover={{
+                scale: 1.05,
+                borderColor: skill.color,
+                boxShadow: `0 10px 30px ${skill.color}25`,
+                y: -5,
+              }}
             >
               <div
                 style={{
@@ -100,60 +113,33 @@ export function SkillsSection() {
                   top: 0,
                   left: 0,
                   right: 0,
-                  height: "2px",
-                  background: `linear-gradient(90deg,${skill.color},transparent)`,
+                  height: "3px",
+                  background: `linear-gradient(90deg, transparent, ${skill.color}, transparent)`,
                 }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginBottom: "12px",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <span style={{ fontSize: "24px" }}>{skill.icon}</span>
-                  <span
-                    style={{
-                      fontWeight: "600",
-                      color: theme.text,
-                      fontSize: "14px",
-                    }}
-                  >
-                    {skill.name}
-                  </span>
-                </div>
-                <span
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "700",
-                    color: skill.color,
-                  }}
-                >
-                  {skill.level}%
-                </span>
-              </div>
               <motion.div
                 style={{
-                  height: "6px",
-                  background: theme.borderColor,
-                  borderRadius: "3px",
-                  overflow: "hidden",
+                  fontSize: "36px",
+                  marginBottom: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                whileHover={{ rotate: 360 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              >
+                {skill.icon}
+              </motion.div>
+              <span
+                style={{
+                  fontWeight: "600",
+                  color: theme.text,
+                  fontSize: "14px",
+                  lineHeight: "1.4",
                 }}
               >
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: idx * 0.1 }}
-                  viewport={{ once: true }}
-                  style={{
-                    height: "100%",
-                    background: skill.color,
-                    borderRadius: "3px",
-                  }}
-                />
-              </motion.div>
+                {skill.name}
+              </span>
             </motion.div>
           ))}
         </motion.div>

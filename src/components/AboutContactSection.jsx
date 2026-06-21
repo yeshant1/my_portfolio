@@ -401,7 +401,7 @@ export function ContactSection() {
           </motion.a>
 
           <motion.a
-            href="https://linkedin.com/in/yeshant1"
+            href="https://www.linkedin.com/in/eshant-yadav/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05, boxShadow: `0 10px 30px ${theme.primary}40` }}
