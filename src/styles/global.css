@@ -1,0 +1,329 @@
+/* ─── GLOBAL STYLES ─── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background-color: #0d021a; /* Locked base for Neon theme */
+}
+
+/* ─── CUSTOM PROPERTIES ─── */
+:root {
+  --primary: #00f5ff;
+  --secondary: #8338ec;
+  --accent: #00e676;
+  --bg-light: rgba(255, 255, 255, 0.1);
+  --bg-dark: rgba(15, 8, 38, 0.9);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Glowing / semi-transparent colors for neon theme */
+  --primary-glow-10: rgba(0, 245, 255, 0.1);
+  --primary-glow-20: rgba(0, 245, 255, 0.2);
+  --primary-glow-30: rgba(0, 245, 255, 0.3);
+  --primary-glow-40: rgba(0, 245, 255, 0.4);
+  --primary-glow-50: rgba(0, 245, 255, 0.5);
+  --primary-glow-60: rgba(0, 245, 255, 0.6);
+}
+
+/* ─── CYBER GRID BACKGROUND ─── */
+.cyber-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 6px var(--primary-glow-60);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 12px var(--primary-glow-30);
+  }
+}
+
+@keyframes blobFloat1 {
+  from {
+    transform: translateY(0px) translateX(0px);
+  }
+  to {
+    transform: translateY(-30px) translateX(15px);
+  }
+}
+
+@keyframes blobFloat2 {
+  from {
+    transform: translateY(0px) translateX(0px);
+  }
+  to {
+    transform: translateY(20px) translateX(-20px);
+  }
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--primary-glow-30);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--primary-glow-60);
+  }
+}
+
+/* ─── SCROLLBAR STYLING ─── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d021a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-glow-30);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-glow-60);
+}
+
+/* ─── SELECTION STYLING ─── */
+::selection {
+  background: var(--primary-glow-30);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: var(--primary-glow-30);
+  color: inherit;
+}
+
+/* ─── BUTTON STYLES ─── */
+button {
+  font-family: inherit;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ─── LINK STYLES ─── */
+a {
+  transition: all 0.3s ease;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--primary-glow-50);
+  outline-offset: 2px;
+}
+
+/* ─── UTILITY CLASSES ─── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glassmorphism {
+  background: rgba(20, 2, 40, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--primary-glow-20);
+  border-radius: 12px;
+}
+
+.glow-effect {
+  animation: glow 3s ease-in-out infinite;
+}
+
+/* ─── RESPONSIVE TYPOGRAPHY ─── */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  /* Responsive grid layouts */
+  [style*="gridTemplateColumns"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  /* About section responsive */
+  section[style*="grid"] {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Fix order property on mobile */
+  [style*="order:"] {
+    order: initial !important;
+  }
+
+  /* Better spacing on mobile */
+  section {
+    padding: 80px 20px 40px !important;
+  }
+
+  /* Navbar spacing */
+  nav {
+    padding: 12px 20px !important;
+  }
+}
+
+/* ─── ACCESSIBILITY ─── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── FOCUS VISIBLE STATES ─── */
+:focus-visible {
+  outline: 2px solid var(--primary-glow-50);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── CONTAINER QUERIES (Modern) ─── */
+@supports (container-type: inline-size) {
+  .responsive-container {
+    container-type: inline-size;
+  }
+
+  @container (max-width: 600px) {
+    .responsive-text {
+      font-size: 14px;
+    }
+  }
+}
+
+/* ─── SMOOTH TRANSITIONS ─── */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ─── SECTION TRANSITIONS ─── */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+/* ─── ANIMATED CONNECTION FLOWS ─── */
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.flow-path-animated {
+  animation: flowDash 1.2s linear infinite;
+}
