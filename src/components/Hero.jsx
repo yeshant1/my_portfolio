@@ -488,9 +488,7 @@ export function Hero() {
           <TypeWriter
             words={[
               "Java Full-Stack Developer",
-              "Agentic AI Engineer",
-              "Microservices Architect",
-              "Spring AI Builder",
+              "Domain Driven Design(DDD) Architect",
             ]}
           />
         </motion.h2>
