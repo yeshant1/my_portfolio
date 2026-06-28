@@ -1,6 +1,6 @@
-# 💻 Eshant Yadav | Java Full Stack & Generative AI Engineer
+# 💻 Eshant Yadav | Java Full Stack Developer &  AI Learner
 
-Welcome! I am a **Java Full Stack Developer & GenAI Engineer** passionate about designing highly scalable, event-driven microservices and integrating state-of-the-art Generative AI capabilities into enterprise systems. Currently crafting software solutions at **Capgemini**.
+Welcome! I am a **Java Full Stack Developer & Learner** passionate about designing highly scalable, event-driven microservices and integrating state-of-the-art Generative AI capabilities into enterprise systems. Currently crafting software solutions at **Capgemini**.
 
 ---
 
