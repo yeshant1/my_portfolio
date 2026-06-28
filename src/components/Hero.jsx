@@ -317,8 +317,8 @@ export function Hero() {
             lineHeight: "1.6",
           }}
         >
-          Engineering intelligence into every layer of the stack — from Spring Boot microservices
-          to Agentic AI pipelines at <span style={{ color: theme.primary, fontWeight: "600" }}>Capgemini, Pune</span>.
+          Engineering scalable backend systems with Spring Boot and microservices. Actively learning
+          and building with Agentic AI at <span style={{ color: theme.primary, fontWeight: "600" }}>Capgemini, Pune</span>.
         </motion.p>
       </div>
 
@@ -504,8 +504,8 @@ export function Hero() {
             lineHeight: "1.8",
           }}
         >
-          Engineering intelligence into every layer of the stack — from Spring Boot microservices
-          to Agentic AI pipelines at <span style={{ color: theme.primary, fontWeight: "600" }}>Capgemini, Pune</span>.
+          Engineering scalable backend systems with Spring Boot and microservices. Actively learning
+          and building with Agentic AI at <span style={{ color: theme.primary, fontWeight: "600" }}>Capgemini, Pune</span>.
         </motion.p>
 
         {/* CTA Buttons */}

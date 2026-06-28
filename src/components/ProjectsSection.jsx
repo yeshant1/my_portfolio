@@ -45,7 +45,7 @@ export function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          style={{ marginBottom: "80px", textAlign: "center" }}
+          style={{ marginBottom: "40px", textAlign: "center" }}
         >
           <h2
             style={{
@@ -57,7 +57,7 @@ export function ProjectsSection() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Featured Projects
+            Featured Personal Projects
           </h2>
           <p
             style={{
@@ -67,7 +67,7 @@ export function ProjectsSection() {
               margin: "0 auto",
             }}
           >
-            Showcase of production-grade systems and innovative solutions
+            Production-grade systems I built to master microservices, distributed systems, and scalable architecture
           </p>
         </motion.div>
 
