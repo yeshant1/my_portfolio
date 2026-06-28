@@ -71,6 +71,78 @@ const NODE_DESCRIPTIONS = {
     desc: "Large Language Model powering conversational intelligence, responding to user prompts with natural language."
   },
 
+  // Quiz Application Nodes
+  client_quiz: {
+    title: "Quiz Frontend",
+    tech: "HTML / CSS / React.js",
+    desc: "Provides the quiz UI, question rendering, leaderboard display, and premium access flow for learners."
+  },
+  gateway_quiz: {
+    title: "Spring Cloud API Gateway",
+    tech: "Spring Cloud Gateway / Routing",
+    desc: "Routes requests to the quiz microservices and centralizes authentication and service access."
+  },
+  security_quiz: {
+    title: "Spring Security & JWT",
+    tech: "Spring Security / JWT",
+    desc: "Protects endpoints and validates secure access for users across the quiz platform."
+  },
+  eureka_quiz: {
+    title: "Eureka Service Discovery",
+    tech: "Netflix Eureka",
+    desc: "Registers the microservices and enables dynamic discovery for the gateway and clients."
+  },
+  auth_quiz: {
+    title: "Authentication Service",
+    tech: "Spring Boot / Spring Security",
+    desc: "Manages user register-login flows and secures access to quiz modules."
+  },
+  question_quiz: {
+    title: "Question Service",
+    tech: "Spring Boot / CRUD APIs",
+    desc: "Handles question creation, update, retrieval, and quiz content management."
+  },
+  quiz_quiz: {
+    title: "Quiz Service",
+    tech: "Spring Boot / REST APIs",
+    desc: "Coordinates quiz sessions, score generation, and learner progression workflows."
+  },
+  leaderboard_quiz: {
+    title: "Leaderboard Service",
+    tech: "Spring Boot / Real-time Data",
+    desc: "Tracks rankings and provides real-time leaderboard updates during quiz participation."
+  },
+  payment_quiz: {
+    title: "Payment Service",
+    tech: "Spring Boot / Premium Access",
+    desc: "Handles premium quiz access and payment-related workflow for upgraded features."
+  },
+  db_auth_quiz: {
+    title: "MySQL DB (Auth)",
+    tech: "MySQL / Isolated Schema",
+    desc: "Stores user credentials, registration details, profiles, and role mappings for secure token issuance."
+  },
+  db_question_quiz: {
+    title: "MySQL DB (Question)",
+    tech: "MySQL / Isolated Schema",
+    desc: "Maintains the complete repository of questions, options, correct answers, and categorizations."
+  },
+  db_quiz_quiz: {
+    title: "MySQL DB (Quiz)",
+    tech: "MySQL / Isolated Schema",
+    desc: "Manages active quiz sessions, user responses, history, and generated scores."
+  },
+  db_leaderboard_quiz: {
+    title: "MySQL DB (Leaderboard)",
+    tech: "MySQL / Isolated Schema",
+    desc: "Stores ranking logs, high scores, dynamic leaderboard data, and historical user performances."
+  },
+  stripe_quiz: {
+    title: "Stripe Payment Gateway",
+    tech: "Stripe API / Webhooks",
+    desc: "Handles secure checkouts, subscription states, and dynamic webhooks for premium quiz packages."
+  },
+
   // Bank Application Nodes
   client_bank: {
     title: "React.js Web App",
@@ -151,6 +223,23 @@ const BOOK_CONNECTIONS = {
   llm: ["springai"]
 };
 
+const QUIZ_CONNECTIONS = {
+  client: ["gateway"],
+  gateway: ["client", "security", "eureka", "auth", "question", "quiz", "leaderboard", "payment"],
+  security: ["gateway"],
+  eureka: ["gateway", "auth", "question", "quiz", "leaderboard", "payment"],
+  auth: ["gateway", "db_auth", "eureka"],
+  question: ["gateway", "db_question", "eureka"],
+  quiz: ["gateway", "db_quiz", "eureka"],
+  leaderboard: ["gateway", "db_leaderboard", "eureka"],
+  payment: ["gateway", "stripe", "eureka"],
+  db_auth: ["auth"],
+  db_question: ["question"],
+  db_quiz: ["quiz"],
+  db_leaderboard: ["leaderboard"],
+  stripe: ["payment"]
+};
+
 const BANK_CONNECTIONS = {
   client: ["gateway"],
   gateway: ["client", "keycloak", "accounts", "loans", "cards"],
@@ -172,7 +261,8 @@ export function ArchitectureDiagram({ projectKey }) {
   const [hoveredNode, setHoveredNode] = useState(null);
 
   const isBook = projectKey === "book";
-  const connections = isBook ? BOOK_CONNECTIONS : BANK_CONNECTIONS;
+  const isQuiz = projectKey === "quiz";
+  const connections = isBook ? BOOK_CONNECTIONS : isQuiz ? QUIZ_CONNECTIONS : BANK_CONNECTIONS;
 
   const isHighlighted = (nodeId) => {
     if (!hoveredNode) return false;
@@ -472,6 +562,132 @@ export function ArchitectureDiagram({ projectKey }) {
                 onMouseLeave={() => setHoveredNode(null)}
               >
                 🧠 LLM Provider
+              </div>
+            </foreignObject>
+          </svg>
+        ) : isQuiz ? (
+          /* QUIZ APPLICATION MICROSERVICES DIAGRAM */
+          <svg viewBox="0 0 900 380" style={{ width: "100%", minWidth: "850px", display: "block" }}>
+            <defs>
+              <marker id="arrow-quiz-active" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill={theme.primary} />
+              </marker>
+              <marker id="arrow-quiz-inactive" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255, 255, 255, 0.15)" />
+              </marker>
+              <marker id="arrow-dotted-quiz-active" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill={theme.accent} />
+              </marker>
+              <marker id="arrow-dotted-quiz-inactive" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="rgba(255, 255, 255, 0.15)" />
+              </marker>
+            </defs>
+
+            <g id="paths">
+              {/* Client -> Gateway */}
+              <path d="M 450 65 L 450 95" {...getPathProps("client", "gateway")} />
+              
+              {/* Gateway <-> Security / Eureka */}
+              <path d="M 350 117 L 300 117" {...getPathProps("gateway", "security")} />
+              <path d="M 550 117 L 600 117" {...getPathProps("gateway", "eureka")} />
+              
+              {/* Gateway -> Services */}
+              <path d="M 450 140 C 450 170, 90 160, 90 190" {...getPathProps("gateway", "auth")} />
+              <path d="M 450 140 C 450 170, 270 160, 270 190" {...getPathProps("gateway", "question")} />
+              <path d="M 450 140 L 450 190" {...getPathProps("gateway", "quiz")} />
+              <path d="M 450 140 C 450 170, 630 160, 630 190" {...getPathProps("gateway", "leaderboard")} />
+              <path d="M 450 140 C 450 170, 810 160, 810 190" {...getPathProps("gateway", "payment")} />
+              
+              {/* Eureka -> Services (Dotted registration) */}
+              <path d="M 700 140 C 700 175, 90 165, 90 190" {...getDottedPathProps("eureka", "auth")} />
+              <path d="M 700 140 C 700 175, 270 165, 270 190" {...getDottedPathProps("eureka", "question")} />
+              <path d="M 700 140 C 700 175, 450 165, 450 190" {...getDottedPathProps("eureka", "quiz")} />
+              <path d="M 700 140 C 700 175, 630 165, 630 190" {...getDottedPathProps("eureka", "leaderboard")} />
+              <path d="M 700 140 C 700 175, 810 165, 810 190" {...getDottedPathProps("eureka", "payment")} />
+
+              {/* Services -> Databases / Stripe */}
+              <path d="M 90 245 L 90 300" {...getPathProps("auth", "db_auth")} />
+              <path d="M 270 245 L 270 300" {...getPathProps("question", "db_question")} />
+              <path d="M 450 245 L 450 300" {...getPathProps("quiz", "db_quiz")} />
+              <path d="M 630 245 L 630 300" {...getPathProps("leaderboard", "db_leaderboard")} />
+              <path d="M 810 245 L 810 300" {...getPathProps("payment", "stripe")} />
+            </g>
+
+            {/* ROW 1: Client */}
+            <foreignObject x="350" y="20" width="200" height="45">
+              <div style={getNodeStyle("client", "#00f5ff")} onMouseEnter={() => setHoveredNode("client")} onMouseLeave={() => setHoveredNode(null)}>
+                💻 Quiz Frontend
+              </div>
+            </foreignObject>
+
+            {/* ROW 2: Gateway & Security & Eureka */}
+            <foreignObject x="100" y="95" width="200" height="45">
+              <div style={getNodeStyle("security", "#8338ec")} onMouseEnter={() => setHoveredNode("security")} onMouseLeave={() => setHoveredNode(null)}>
+                🔐 Spring Security
+              </div>
+            </foreignObject>
+            <foreignObject x="350" y="95" width="200" height="45">
+              <div style={getNodeStyle("gateway", "#8338ec")} onMouseEnter={() => setHoveredNode("gateway")} onMouseLeave={() => setHoveredNode(null)}>
+                ⚡ API Gateway
+              </div>
+            </foreignObject>
+            <foreignObject x="600" y="95" width="200" height="45">
+              <div style={getNodeStyle("eureka", "#ffbe0b")} onMouseEnter={() => setHoveredNode("eureka")} onMouseLeave={() => setHoveredNode(null)}>
+                🔎 Eureka Discovery
+              </div>
+            </foreignObject>
+
+            {/* ROW 3: Microservices */}
+            <foreignObject x="20" y="190" width="140" height="55">
+              <div style={getNodeStyle("auth", "#ff006e")} onMouseEnter={() => setHoveredNode("auth")} onMouseLeave={() => setHoveredNode(null)}>
+                Auth Service
+              </div>
+            </foreignObject>
+            <foreignObject x="200" y="190" width="140" height="55">
+              <div style={getNodeStyle("question", "#ff006e")} onMouseEnter={() => setHoveredNode("question")} onMouseLeave={() => setHoveredNode(null)}>
+                Question Service
+              </div>
+            </foreignObject>
+            <foreignObject x="380" y="190" width="140" height="55">
+              <div style={getNodeStyle("quiz", "#ff006e")} onMouseEnter={() => setHoveredNode("quiz")} onMouseLeave={() => setHoveredNode(null)}>
+                Quiz Service
+              </div>
+            </foreignObject>
+            <foreignObject x="560" y="190" width="140" height="55">
+              <div style={getNodeStyle("leaderboard", "#ff006e")} onMouseEnter={() => setHoveredNode("leaderboard")} onMouseLeave={() => setHoveredNode(null)}>
+                Leaderboard Service
+              </div>
+            </foreignObject>
+            <foreignObject x="740" y="190" width="140" height="55">
+              <div style={getNodeStyle("payment", "#ff006e")} onMouseEnter={() => setHoveredNode("payment")} onMouseLeave={() => setHoveredNode(null)}>
+                Payment Service
+              </div>
+            </foreignObject>
+
+            {/* ROW 4: Databases & Stripe */}
+            <foreignObject x="20" y="300" width="140" height="50">
+              <div style={getNodeStyle("db_auth", "#00e676")} onMouseEnter={() => setHoveredNode("db_auth")} onMouseLeave={() => setHoveredNode(null)}>
+                🗄️ MySQL DB (Auth)
+              </div>
+            </foreignObject>
+            <foreignObject x="200" y="300" width="140" height="50">
+              <div style={getNodeStyle("db_question", "#00e676")} onMouseEnter={() => setHoveredNode("db_question")} onMouseLeave={() => setHoveredNode(null)}>
+                🗄️ MySQL DB (Ques)
+              </div>
+            </foreignObject>
+            <foreignObject x="380" y="300" width="140" height="50">
+              <div style={getNodeStyle("db_quiz", "#00e676")} onMouseEnter={() => setHoveredNode("db_quiz")} onMouseLeave={() => setHoveredNode(null)}>
+                🗄️ MySQL DB (Quiz)
+              </div>
+            </foreignObject>
+            <foreignObject x="560" y="300" width="140" height="50">
+              <div style={getNodeStyle("db_leaderboard", "#00e676")} onMouseEnter={() => setHoveredNode("db_leaderboard")} onMouseLeave={() => setHoveredNode(null)}>
+                🗄️ MySQL DB (Ldr)
+              </div>
+            </foreignObject>
+            <foreignObject x="740" y="300" width="140" height="50">
+              <div style={getNodeStyle("stripe", "#ffbe0b")} onMouseEnter={() => setHoveredNode("stripe")} onMouseLeave={() => setHoveredNode(null)}>
+                💳 Stripe Gateway
               </div>
             </foreignObject>
           </svg>
